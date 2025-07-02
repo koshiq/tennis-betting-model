@@ -1,16 +1,7 @@
-# Random Forest from Scratch
-Building random forest from scratch to predict tennis match results.
+# Tennis Match Prediction Model
 
-## Notes on Random forest
-Notes extracted from: https://carbonati.github.io/posts/random-forests-from-scratch/
+A sophisticated machine learning model built for **higher accuracy** in predicting tennis match outcomes using Random Forest and Decision Tree algorithms implemented from scratch.
 
-Random forests -> Ensemble learning methods used for classification and regression
-Advantages:
-- Non-parametric (doesn't make assumptions about the data)
-- Little to no parameter tuning
-- Constructed with basic arithmetic (as opposed to nn that require a lot of mmuls)
+## 🎾 Overview
 
-Binary Decision Trees -> Structure based on a sequential decision process
-- Starts from a root note
-- Ask different questions and traverses the tree
-- 
+This project implements a comprehensive tennis betting prediction system that analyzes player statistics, historical performance, and match conditions to predict match outcomes with enhanced accuracy. Built with guidance from **Green Code** for optimal performance and reliability.
