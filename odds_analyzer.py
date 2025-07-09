@@ -96,21 +96,22 @@ class OddsAnalyzer:
             response.raise_for_status()
             matches = response.json()
             
-            # Filter for Cincinnati Open matches
-            cincinnati_matches = [
+            # Filter for Wimbledon matches
+            wimbledon_matches = [
                 match for match in matches 
-                if 'Cincinnati' in match.get('sport_title', '') 
-                or 'Western & Southern' in match.get('sport_title', '')
+                if 'Wimbledon' in match.get('sport_title', '') 
+                or 'The Championships' in match.get('sport_title', '')
+                or 'Grand Slam' in match.get('sport_title', '')
             ]
             
-            if cincinnati_matches:
-                print(f"\nFound {len(cincinnati_matches)} Cincinnati Open matches:")
-                for match in cincinnati_matches:
+            if wimbledon_matches:
+                print(f"\nFound {len(wimbledon_matches)} Wimbledon matches:")
+                for match in wimbledon_matches:
                     print(f"- {match['home_team']} vs {match['away_team']}")
             else:
-                print("\nNo Cincinnati Open matches found at this time.")
+                print("\nNo Wimbledon matches found at this time.")
             
-            return cincinnati_matches
+            return wimbledon_matches
             
         except requests.exceptions.RequestException as e:
             print(f"Error fetching tennis matches: {e}")
@@ -120,13 +121,13 @@ class OddsAnalyzer:
         """Prepare match data for model prediction"""
         # Extract relevant features from match data
         features = {
-            'winner_rank': match_data.get('home_team_rank', 100),
-            'loser_rank': match_data.get('away_team_rank', 100),
-            'surface_numeric': 0,  # Default to Hard court
-            'winner_ht': match_data.get('home_team_height', 180),
-            'loser_ht': match_data.get('away_team_height', 180),
-            'winner_age': match_data.get('home_team_age', 25),
-            'loser_age': match_data.get('away_team_age', 25)
+            'winner_rank': float(match_data.get('home_team_rank', 100)),
+            'loser_rank': float(match_data.get('away_team_rank', 100)),
+            'surface_numeric': 2.0,  # Default to Grass court (Wimbledon)
+            'winner_ht': float(match_data.get('home_team_height', 180)),
+            'loser_ht': float(match_data.get('away_team_height', 180)),
+            'winner_age': float(match_data.get('home_team_age', 25)),
+            'loser_age': float(match_data.get('away_team_age', 25))
         }
         return pd.DataFrame([features])
     
@@ -172,13 +173,13 @@ class OddsAnalyzer:
     
     def monitor_odds(self, interval_minutes=5):
         """Continuously monitor odds for value betting opportunities"""
-        print("\nMonitoring Cincinnati Open matches for value bets...")
+        print("\nMonitoring Wimbledon matches for value bets...")
         while True:
             print(f"\nChecking for value bets at {datetime.now()}")
             value_bets = self.find_value_bets()
             
             if value_bets:
-                print("\nPotential value bets found in Cincinnati Open:")
+                print("\nPotential value bets found in Wimbledon:")
                 for bet in value_bets:
                     print(f"\nMatch: {bet['home_team']} vs {bet['away_team']}")
                     print(f"Model probability: {bet['model_probability']:.2%}")

@@ -148,7 +148,6 @@ class DecisionTree:
     
     def predict(self, data):
         assert data.shape[0] != 0
-        assert data.shape[0] != 1
 
         results = np.full((data.shape[0], 1), -1)
 
